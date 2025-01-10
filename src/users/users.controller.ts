@@ -8,10 +8,11 @@ import {
   Delete,
   Patch,
 } from '@nestjs/common';
-import { CreateUserDto } from 'src/dto/create-user.dto';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
-import { UpdateUserDto } from 'src/dto/update-user.dto';
+import { UpdateUserDto } from 'src/users/dto/update-user.dto';
+import { CreateProfileDto } from 'src/users/dto/create-profile.dto';
 
 @Controller('users')
 export class UsersController {
@@ -38,5 +39,13 @@ export class UsersController {
     @Body() user: UpdateUserDto,
   ) {
     return this.usersService.updateUser(id, user);
+  }
+
+  @Post(':id/profile')
+  createProfile(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() profile: CreateProfileDto,
+  ) {
+    return this.usersService.createProfile(id, profile);
   }
 }
